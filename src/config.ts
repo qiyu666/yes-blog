@@ -58,6 +58,11 @@ export const profileConfig: ProfileConfig = {
 	bio: "热爱技术，热爱生活",
 	links: [
 		{
+			name: "AList网盘",
+			icon: "/favicon/alist.png",
+			url: "http://192.168.110.55:4214",
+		},
+		{
 			name: "Steam",
 			icon: "fa6-brands:steam",
 			url: "https://store.steampowered.com",
