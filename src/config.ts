@@ -53,7 +53,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/demo-avatar.png",
+	avatar: "/favicon/tx.jpg",
 	name: "qiyu",
 	bio: "热爱技术，热爱生活",
 	links: [
