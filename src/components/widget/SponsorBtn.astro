@@ -12,68 +12,69 @@ const className = Astro.props.class;
 			<path fill="currentColor" d="M18.5 3H6c-1.1 0-2 .9-2 2v5.71c0 3.83 2.95 7.18 6.78 7.29c3.96.12 7.22-3.06 7.22-7v-1h.5c1.93 0 3.5-1.57 3.5-3.5S20.43 3 18.5 3zM16 5v3h-2V5h2zm-4 0v3H8V5h4zM6 5v3h-.01L6 5zm12.5 5H18V8h.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zM6 19h12v2H6z"/>
 		</svg>
 	</button>
-	<div id="sponsor-popup" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 opacity-0 invisible transition-all duration-300 z-50">
-		<div class="card-base !rounded-2xl p-4 shadow-xl">
-			<h3 class="text-base font-bold mb-3 text-center">请博主喝杯奶茶</h3>
-			<div class="flex justify-center gap-3">
-				<div class="text-center">
-					<img src="/favicon/wxskm.jpg" alt="微信收款码" class="w-24 h-24 rounded-lg object-cover" />
-					<p class="text-xs mt-1 text-neutral-500">微信</p>
-				</div>
-				<div class="text-center">
-					<img src="/favicon/zfbskm.jpg" alt="支付宝收款码" class="w-24 h-24 rounded-lg object-cover" />
-					<p class="text-xs mt-1 text-neutral-500">支付宝</p>
-				</div>
-			</div>
-		</div>
-		<div class="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-black/10 dark:border-t-white/10"></div>
-	</div>
 </div>
 
 <script>
-	const btn = document.getElementById('sponsor-btn');
-	const popup = document.getElementById('sponsor-popup');
-	let isPopupVisible = false;
-
-	function showPopup() {
-		if (popup) {
-			popup.classList.remove('opacity-0', 'invisible');
-			popup.classList.add('opacity-100', 'visible');
-			isPopupVisible = true;
+	const modalId = 'sponsor-modal';
+	
+	function createModal() {
+		if (document.getElementById(modalId)) return;
+		
+		const modal = document.createElement('div');
+		modal.id = modalId;
+		modal.className = 'fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 backdrop-blur-sm';
+		modal.innerHTML = `
+			<div class="card-base !rounded-2xl p-6 shadow-2xl max-w-lg mx-4">
+				<h3 class="text-lg font-bold mb-4 text-center">请博主喝杯奶茶</h3>
+				<div class="flex justify-center gap-6">
+					<div class="text-center">
+						<img src="/favicon/wxskm.jpg" alt="微信收款码" class="w-56 h-56 rounded-lg" />
+						<p class="text-sm mt-2 text-neutral-500">微信</p>
+					</div>
+					<div class="text-center">
+						<img src="/favicon/zfbskm.jpg" alt="支付宝收款码" class="w-56 h-56 rounded-lg" />
+						<p class="text-sm mt-2 text-neutral-500">支付宝</p>
+					</div>
+				</div>
+				<button id="close-modal" class="mt-4 w-full py-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 transition">
+					关闭
+				</button>
+			</div>
+		`;
+		document.body.appendChild(modal);
+		
+		const closeBtn = modal.querySelector('#close-modal');
+		closeBtn?.addEventListener('click', hideModal);
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) hideModal();
+		});
+	}
+	
+	function showModal() {
+		createModal();
+		const modal = document.getElementById(modalId);
+		if (modal) {
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
 		}
 	}
-
-	function hidePopup() {
-		if (popup) {
-			popup.classList.remove('opacity-100', 'visible');
-			popup.classList.add('opacity-0', 'invisible');
-			isPopupVisible = false;
+	
+	function hideModal() {
+		const modal = document.getElementById(modalId);
+		if (modal) {
+			modal.classList.remove('flex');
+			modal.classList.add('hidden');
 		}
 	}
-
-	btn?.addEventListener('mouseenter', showPopup);
-	btn?.addEventListener('mouseleave', (e) => {
-		setTimeout(() => {
-			if (!popup?.matches(':hover')) {
-				hidePopup();
-			}
-		}, 100);
-	});
-
-	popup?.addEventListener('mouseenter', showPopup);
-	popup?.addEventListener('mouseleave', hidePopup);
-
-	btn?.addEventListener('click', () => {
-		if (isPopupVisible) {
-			hidePopup();
-		} else {
-			showPopup();
-		}
-	});
-
+	
 	document.addEventListener('click', (e) => {
-		if (isPopupVisible && !btn?.contains(e.target as Node) && !popup?.contains(e.target as Node)) {
-			hidePopup();
+		const btn = document.getElementById('sponsor-btn');
+		if (btn && btn.contains(e.target as Node)) {
+			showModal();
 		}
+	});
+	
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') hideModal();
 	});
 </script>
