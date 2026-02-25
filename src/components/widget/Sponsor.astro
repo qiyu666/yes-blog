@@ -1,0 +1,23 @@
+---
+interface Props {
+	class?: string;
+}
+
+const className = Astro.props.class;
+---
+
+<div class:list={[className, "onload-animation"]}>
+    <div class="card-base !rounded-2xl p-4">
+        <h3 class="text-lg font-bold mb-3 text-center">请博主喝杯奶茶</h3>
+        <div class="flex justify-center gap-4">
+            <div class="text-center">
+                <img src="/favicon/wxskm.jpg" alt="微信收款码" class="w-28 h-28 rounded-lg object-cover" />
+                <p class="text-xs mt-1 text-neutral-500">微信</p>
+            </div>
+            <div class="text-center">
+                <img src="/favicon/zfbskm.jpg" alt="支付宝收款码" class="w-28 h-28 rounded-lg object-cover" />
+                <p class="text-xs mt-1 text-neutral-500">支付宝</p>
+            </div>
+        </div>
+    </div>
+</div>
