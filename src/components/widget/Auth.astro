@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+
+const user = Astro.cookies.get("user")?.json() || null;
+---
+<div class="flex items-center gap-2">
+    {user ? (
+        <div class="flex items-center gap-2">
+            <img src={user.avatar} alt={user.name} class="w-6 h-6 rounded-full" />
+            <span class="text-sm font-medium">{user.name || user.login}</span>
+            <a href="/api/auth/logout" class="text-sm text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition">
+                退出
+            </a>
+        </div>
+    ) : (
+        <a href="/api/auth/github" class="flex items-center gap-2 btn-regular rounded-lg h-10 px-3 active:scale-95">
+            <Icon name="fa6-brands:github" class="text-[1.2rem]"></Icon>
+            <span>GitHub 登录</span>
+        </a>
+    )}
+</div>
