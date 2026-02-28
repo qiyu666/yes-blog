@@ -75,8 +75,8 @@
 </div>
 
 <script is:inline>
-    // 确保DOM完全加载后执行
-    document.addEventListener('DOMContentLoaded', function() {
+    // 初始化聊天机器人
+    function initChatBot() {
         const toggle = document.getElementById('chatbot-toggle');
         const chatWindow = document.getElementById('chatbot-window');
         const close = document.getElementById('chatbot-close');
@@ -91,26 +91,35 @@
             return;
         }
 
+        // 移除可能存在的旧事件监听器
+        toggle.replaceWith(toggle.cloneNode(true));
+        const newToggle = document.getElementById('chatbot-toggle');
+        close.replaceWith(close.cloneNode(true));
+        const newClose = document.getElementById('chatbot-close');
+        form.replaceWith(form.cloneNode(true));
+        const newForm = document.getElementById('chatbot-form');
+        const newInput = document.getElementById('chatbot-input');
+
         // 切换聊天窗口
-        toggle.addEventListener('click', function(e) {
+        newToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             chatWindow.classList.toggle('hidden');
         });
 
-        close.addEventListener('click', function(e) {
+        newClose.addEventListener('click', function(e) {
             e.stopPropagation();
             chatWindow.classList.add('hidden');
         });
 
         // 发送消息
-        form.addEventListener('submit', async function(e) {
+        newForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const message = input.value.trim();
+            const message = newInput.value.trim();
             if (!message) return;
 
             // 添加用户消息
             addMessage('user', message);
-            input.value = '';
+            newInput.value = '';
 
             // 显示加载状态
             const loadingId = addLoadingMessage();
@@ -237,9 +246,23 @@
 
         // 点击外部关闭
         document.addEventListener('click', function(e) {
-            if (!chatWindow.contains(e.target) && e.target !== toggle) {
+            if (!chatWindow.contains(e.target) && e.target !== newToggle) {
                 chatWindow.classList.add('hidden');
             }
         });
-    });
+    }
+
+    // 确保DOM完全加载后执行
+    document.addEventListener('DOMContentLoaded', initChatBot);
+
+    // 监听Swup页面切换事件，重新初始化聊天机器人
+    if (window.swup) {
+        window.swup.hooks.on('page:view', initChatBot);
+    } else {
+        document.addEventListener('swup:enable', function() {
+            if (window.swup) {
+                window.swup.hooks.on('page:view', initChatBot);
+            }
+        });
+    }
 </script>
