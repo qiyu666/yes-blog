@@ -208,38 +208,44 @@
                 const selectedModel = newModelSelect.value;
                 console.log('选择的模型:', selectedModel);
                 
-                // 调用 API
-                const response = await fetch('https://apis.iflow.cn/v1/chat/completions', {
+                // 调用 Coze API
+                const userContent = localContext ? `${localContext}\n用户问题：${message}` : message;
+                
+                const response = await fetch('https://api.coze.cn/v3/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer sk-ced099803f5967405e7523f7162beecd'
+                        'Authorization': 'Bearer pat_zjXGbwh1n79zbSoaktFd9KH3qPr2NKOCfdoIfWyONMQdh52abZ8gjQxiiPXBbovA'
                     },
                     body: JSON.stringify({
-                        model: selectedModel,
-                        messages: [
-                            {
-                                role: 'system',
-                                content: '你是一个友好的AI助手，帮助用户解答问题，提供有用的信息。如果有本地博客内容，请优先参考本地内容回答。'
-                            },
+                        bot_id: '7487077223628017701',
+                        user_id: 'user_' + Date.now(),
+                        additional_messages: [
                             {
                                 role: 'user',
-                                content: localContext ? `${localContext}\n用户问题：${message}` : message
+                                content: userContent,
+                                content_type: 'text'
                             }
                         ],
-                        temperature: 0.7
+                        stream: false
                     })
                 });
 
                 const data = await response.json();
-                console.log('API响应:', data);
+                console.log('Coze API响应:', data);
                 removeLoadingMessage(loadingId);
 
-                if (data.choices && data.choices[0]) {
-                    addMessage(newMessages, 'assistant', data.choices[0].message.content);
-                } else if (data.error) {
-                    console.error('API错误:', data.error);
-                    addMessage(newMessages, 'assistant', 'API错误: ' + (data.error.message || '未知错误'));
+                if (data.code === 0 && data.data && data.data.messages) {
+                    // 找到助手的回复
+                    const assistantMessage = data.data.messages.find(msg => msg.role === 'assistant');
+                    if (assistantMessage && assistantMessage.content) {
+                        addMessage(newMessages, 'assistant', assistantMessage.content);
+                    } else {
+                        addMessage(newMessages, 'assistant', '抱歉，我暂时无法回答你的问题，请稍后再试。');
+                    }
+                } else if (data.msg) {
+                    console.error('Coze API错误:', data.msg);
+                    addMessage(newMessages, 'assistant', 'API错误: ' + data.msg);
                 } else {
                     addMessage(newMessages, 'assistant', '抱歉，我暂时无法回答你的问题，请稍后再试。');
                 }
