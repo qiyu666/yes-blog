@@ -1,0 +1,234 @@
+---
+---
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50">
+    <!-- 聊天按钮 -->
+    <button id="chatbot-toggle" class="w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all duration-300 active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+    </button>
+
+    <!-- 聊天窗口 -->
+    <div id="chatbot-window" class="hidden absolute bottom-16 right-0 w-80 md:w-96 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+        <!-- 聊天头部 -->
+        <div class="bg-primary text-white p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-bold">
+                    Q
+                </div>
+                <div>
+                    <h3 class="font-semibold">AI 助手</h3>
+                    <p class="text-xs opacity-80">随时为你解答问题</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <select id="chatbot-model" class="text-sm bg-white/20 text-white border border-white/30 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white">
+                    <option value="gpt-5.2">GPT-5.2</option>
+                    <option value="gpt-5.1">GPT-5.1</option>
+                    <option value="gpt-5">GPT-5</option>
+                    <option value="gpt-5-chat-latest">GPT-5 Latest</option>
+                    <option value="gpt-4o">GPT-4o</option>
+                    <option value="gpt-5.1-ca">GPT-5.1 CA</option>
+                    <option value="gpt-5-ca">GPT-5 CA</option>
+                    <option value="deepseek-v3-2">DeepSeek V3-2</option>
+                    <option value="claude-sonnet-4-6">Claude Sonnet 4-6</option>
+                    <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro</option>
+                </select>
+                <button id="chatbot-close" class="text-white hover:opacity-80">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 聊天内容 -->
+        <div id="chatbot-messages" class="p-4 h-80 overflow-y-auto space-y-4">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
+                    Q
+                </div>
+                <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
+                    <p class="text-sm">你好！我是你的 AI 助手，有什么可以帮助你的吗？</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="p-4 border-t border-neutral-200 dark:border-neutral-700">
+            <form id="chatbot-form" class="flex gap-2">
+                <input 
+                    type="text" 
+                    id="chatbot-input" 
+                    class="flex-1 p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="输入你的问题..."
+                />
+                <button 
+                    type="submit" 
+                    class="bg-primary text-white px-4 rounded-lg hover:bg-primary/90 transition"
+                >
+                    发送
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    const toggle = document.getElementById('chatbot-toggle');
+    const chatWindow = document.getElementById('chatbot-window');
+    const close = document.getElementById('chatbot-close');
+    const form = document.getElementById('chatbot-form');
+    const input = document.getElementById('chatbot-input');
+    const messages = document.getElementById('chatbot-messages');
+    const modelSelect = document.getElementById('chatbot-model');
+
+    // 切换聊天窗口
+    toggle.addEventListener('click', () => {
+        chatWindow.classList.toggle('hidden');
+    });
+
+    close.addEventListener('click', () => {
+        chatWindow.classList.add('hidden');
+    });
+
+    // 发送消息
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        // 添加用户消息
+        addMessage('user', message);
+        input.value = '';
+
+        // 显示加载状态
+        const loadingId = addLoadingMessage();
+
+        try {
+            // 搜索本地内容
+            let localContext = '';
+            try {
+                const searchResponse = await fetch(`/api/content-index?q=${encodeURIComponent(message)}`);
+                if (searchResponse.ok) {
+                    const searchResults = await searchResponse.json();
+                    if (searchResults.length > 0) {
+                        localContext = '以下是从本地博客中找到的相关内容：\n';
+                        searchResults.forEach((result, index) => {
+                            localContext += `${index + 1}. 标题：${result.title}\n`;
+                            localContext += `   链接：/posts/${result.slug}/\n`;
+                            localContext += `   摘要：${result.description || result.content.substring(0, 100)}...\n\n`;
+                        });
+                    }
+                }
+            } catch (searchError) {
+                console.log('本地搜索失败:', searchError);
+            }
+
+            // 获取选择的模型
+            const selectedModel = modelSelect.value;
+            
+            // 调用 API
+            const response = await fetch('https://api.chatanywhere.tech/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer sk-r13Xth1kjMXyrRG5UVkf8ql5ICyzrXNwKc5cnreYASf56xNI'
+                },
+                body: JSON.stringify({
+                    model: selectedModel,
+                    messages: [
+                        {
+                            role: 'system',
+                            content: '你是一个友好的AI助手，帮助用户解答问题，提供有用的信息。如果有本地博客内容，请优先参考本地内容回答。'
+                        },
+                        {
+                            role: 'user',
+                            content: localContext ? `${localContext}\n用户问题：${message}` : message
+                        }
+                    ],
+                    temperature: 0.7
+                })
+            });
+
+            const data = await response.json();
+            removeLoadingMessage(loadingId);
+
+            if (data.choices && data.choices[0]) {
+                addMessage('assistant', data.choices[0].message.content);
+            } else {
+                addMessage('assistant', '抱歉，我暂时无法回答你的问题，请稍后再试。');
+            }
+        } catch (error) {
+            removeLoadingMessage(loadingId);
+            addMessage('assistant', '网络错误，请检查你的网络连接后重试。');
+        }
+    });
+
+    // 添加消息
+    function addMessage(role, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex items-start gap-3' + (role === 'user' ? ' justify-end' : '');
+
+        if (role === 'assistant') {
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
+                    Q
+                </div>
+                <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
+                    <p class="text-sm">${content}</p>
+                </div>
+            `;
+        } else {
+            messageDiv.innerHTML = `
+                <div class="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 max-w-[80%]">
+                    <p class="text-sm">${content}</p>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-neutral-300 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300 flex items-center justify-center font-bold flex-shrink-0">
+                    U
+                </div>
+            `;
+        }
+
+        messages.appendChild(messageDiv);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // 添加加载消息
+    function addLoadingMessage() {
+        const loadingDiv = document.createElement('div');
+        const id = 'loading-' + Date.now();
+        loadingDiv.id = id;
+        loadingDiv.className = 'flex items-start gap-3';
+        loadingDiv.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
+                Q
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
+                <div class="flex space-x-2">
+                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 300ms"></div>
+                </div>
+            </div>
+        `;
+        messages.appendChild(loadingDiv);
+        messages.scrollTop = messages.scrollHeight;
+        return id;
+    }
+
+    // 移除加载消息
+    function removeLoadingMessage(id) {
+        const loadingDiv = document.getElementById(id);
+        if (loadingDiv) {
+            loadingDiv.remove();
+        }
+    }
+
+    // 点击外部关闭
+    document.addEventListener('click', (e) => {
+        if (!chatWindow.contains(e.target) && e.target !== toggle) {
+            chatWindow.classList.add('hidden');
+        }
+    });
+</script>
