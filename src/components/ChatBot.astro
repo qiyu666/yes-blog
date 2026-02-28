@@ -1,90 +1,171 @@
 ---
 ---
-<div id="chatbot-container" class="fixed bottom-8 right-8 z-[9999]">
-    <!-- 聊天按钮 -->
-    <button id="chatbot-toggle" class="w-16 h-16 rounded-full bg-primary text-white shadow-xl flex items-center justify-center hover:bg-primary/90 transition-all duration-300 active:scale-95 animate-pulse cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-    </button>
-
+<div id="waifu-container" class="fixed bottom-4 right-4 z-[9999] flex flex-col items-end">
+    <!-- 消息气泡 -->
+    <div id="waifu-bubble" class="hidden mb-2 max-w-[280px] bg-white dark:bg-neutral-800 rounded-2xl rounded-br-sm shadow-lg border-2 border-pink-200 dark:border-pink-800 p-4 animate-bounce-in">
+        <p id="waifu-text" class="text-sm text-neutral-700 dark:text-neutral-200">你好呀！我是你的二次元助手~ 有什么我可以帮你的吗？</p>
+    </div>
+    
     <!-- 聊天窗口 -->
-    <div id="chatbot-window" class="hidden fixed bottom-24 right-8 w-80 md:w-96 bg-white dark:bg-neutral-800 rounded-lg shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden z-[9999]" style="max-height: 70vh;">
-        <!-- 聊天头部 -->
-        <div class="bg-primary text-white p-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-bold">
-                    Q
-                </div>
-                <div>
-                    <h3 class="font-semibold">AI 助手</h3>
-                    <p class="text-xs opacity-80">随时为你解答问题</p>
-                </div>
-            </div>
+    <div id="waifu-chat" class="hidden mb-2 w-80 md:w-96 bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl border-2 border-pink-200 dark:border-pink-800 overflow-hidden">
+        <!-- 头部 -->
+        <div class="bg-gradient-to-r from-pink-400 to-purple-400 p-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <button id="chatbot-close" class="text-white hover:opacity-80 cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-2xl">🌸</div>
+                <div>
+                    <h3 class="font-bold text-white text-sm">小樱</h3>
+                    <p class="text-xs text-pink-100">在线</p>
+                </div>
             </div>
+            <button id="waifu-close" class="text-white hover:text-pink-200 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
-
+        
         <!-- 聊天内容 -->
-        <div id="chatbot-messages" class="p-4 h-80 overflow-y-auto space-y-4 bg-white dark:bg-neutral-800">
-            <div class="flex items-start gap-3">
-                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
-                    Q
-                </div>
-                <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
-                    <p class="text-sm text-black dark:text-white">你好！我是你的 AI 助手，有什么可以帮助你的吗？</p>
+        <div id="waifu-messages" class="p-3 h-64 overflow-y-auto space-y-3 bg-gradient-to-b from-pink-50 to-white dark:from-neutral-900 dark:to-neutral-800">
+            <div class="flex items-start gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-sm flex-shrink-0">🌸</div>
+                <div class="bg-white dark:bg-neutral-700 rounded-2xl rounded-tl-sm shadow-sm border border-pink-100 dark:border-neutral-600 p-2.5 max-w-[75%]">
+                    <p class="text-xs text-neutral-700 dark:text-neutral-200">你好呀！我是小樱~ 欢迎来到我的博客！有什么我可以帮你的吗？</p>
                 </div>
             </div>
         </div>
-
+        
         <!-- 输入区域 -->
-        <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
-            <form id="chatbot-form" class="flex gap-2">
+        <div class="p-3 border-t border-pink-100 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            <form id="waifu-form" class="flex gap-2">
                 <input 
                     type="text" 
-                    id="chatbot-input" 
-                    class="flex-1 p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-neutral-700 text-black dark:text-white"
-                    placeholder="输入你的问题..."
+                    id="waifu-input" 
+                    class="flex-1 px-3 py-2 text-sm border border-pink-200 dark:border-neutral-600 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 placeholder-neutral-400"
+                    placeholder="和小樱聊天吧..."
                 />
                 <button 
                     type="submit" 
-                    class="bg-primary text-white px-4 rounded-lg hover:bg-primary/90 transition cursor-pointer"
+                    class="w-10 h-10 bg-gradient-to-r from-pink-400 to-purple-400 text-white rounded-full hover:from-pink-500 hover:to-purple-500 transition flex items-center justify-center shadow-md"
                 >
-                    发送
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
                 </button>
             </form>
         </div>
     </div>
+    
+    <!-- 二次元小人 -->
+    <div id="waifu-character" class="relative cursor-pointer group">
+        <!-- 悬浮提示 -->
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+            点击和我聊天~
+        </div>
+        
+        <!-- 角色容器 -->
+        <div class="w-24 h-24 relative animate-float">
+            <!-- 身体 -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-14 bg-gradient-to-b from-pink-300 to-pink-400 rounded-full"></div>
+            
+            <!-- 头部 -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-14 h-14 bg-gradient-to-b from-pink-200 to-pink-300 rounded-full shadow-lg">
+                <!-- 眼睛 -->
+                <div class="absolute top-4 left-3 w-3 h-4 bg-neutral-800 rounded-full">
+                    <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full"></div>
+                </div>
+                <div class="absolute top-4 right-3 w-3 h-4 bg-neutral-800 rounded-full">
+                    <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full"></div>
+                </div>
+                
+                <!-- 腮红 -->
+                <div class="absolute top-7 left-1.5 w-2.5 h-1.5 bg-pink-400/50 rounded-full"></div>
+                <div class="absolute top-7 right-1.5 w-2.5 h-1.5 bg-pink-400/50 rounded-full"></div>
+                
+                <!-- 嘴巴 -->
+                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 w-3 h-2 border-b-2 border-neutral-700 rounded-full"></div>
+            </div>
+            
+            <!-- 头发 -->
+            <div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-18 h-16">
+                <!-- 刘海 -->
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-pink-400 rounded-full"></div>
+                <!-- 左发 -->
+                <div class="absolute top-4 -left-2 w-6 h-10 bg-pink-400 rounded-full transform -rotate-12"></div>
+                <!-- 右发 -->
+                <div class="absolute top-4 -right-2 w-6 h-10 bg-pink-400 rounded-full transform rotate-12"></div>
+                <!-- 呆毛 -->
+                <div class="absolute -top-2 left-1/2 w-1 h-4 bg-pink-400 rounded-full transform -rotate-15 origin-bottom"></div>
+            </div>
+            
+            <!-- 手 -->
+            <div class="absolute bottom-4 -left-1 w-4 h-4 bg-pink-200 rounded-full animate-wave"></div>
+            <div class="absolute bottom-4 -right-1 w-4 h-4 bg-pink-200 rounded-full animate-wave" style="animation-delay: 0.5s"></div>
+        </div>
+    </div>
 </div>
 
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes wave {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-20deg); }
+        75% { transform: rotate(20deg); }
+    }
+    
+    @keyframes bounce-in {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-wave {
+        animation: wave 2s ease-in-out infinite;
+    }
+    
+    .animate-bounce-in {
+        animation: bounce-in 0.3s ease-out;
+    }
+</style>
+
 <script is:inline>
+    // 随机消息
+    const randomMessages = [
+        "你好呀！今天过得怎么样？",
+        "欢迎来到我的博客~",
+        "有什么我可以帮你的吗？",
+        "要不要看看最新的文章？",
+        "我在等你哦~",
+        "点击我可以开始聊天！",
+        "今天也要元气满满！",
+        "有什么想聊的吗？"
+    ];
+    
     // 添加消息
     function addMessage(messages, role, content) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = 'flex items-start gap-3' + (role === 'user' ? ' justify-end' : '');
+        messageDiv.className = 'flex items-start gap-2' + (role === 'user' ? ' justify-end' : '');
 
         if (role === 'assistant') {
             messageDiv.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
-                    Q
-                </div>
-                <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
-                    <p class="text-sm text-black dark:text-white">${content}</p>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-sm flex-shrink-0">🌸</div>
+                <div class="bg-white dark:bg-neutral-700 rounded-2xl rounded-tl-sm shadow-sm border border-pink-100 dark:border-neutral-600 p-2.5 max-w-[75%]">
+                    <p class="text-xs text-neutral-700 dark:text-neutral-200">${content}</p>
                 </div>
             `;
         } else {
             messageDiv.innerHTML = `
-                <div class="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 max-w-[80%]">
-                    <p class="text-sm text-black dark:text-white">${content}</p>
+                <div class="bg-gradient-to-r from-pink-400 to-purple-400 text-white rounded-2xl rounded-tr-sm shadow-sm p-2.5 max-w-[75%]">
+                    <p class="text-xs">${content}</p>
                 </div>
-                <div class="w-8 h-8 rounded-full bg-neutral-300 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300 flex items-center justify-center font-bold flex-shrink-0">
-                    U
-                </div>
+                <div class="w-8 h-8 rounded-full bg-neutral-300 dark:bg-neutral-600 flex items-center justify-center text-sm flex-shrink-0">👤</div>
             `;
         }
 
@@ -97,16 +178,14 @@
         const loadingDiv = document.createElement('div');
         const id = 'loading-' + Date.now();
         loadingDiv.id = id;
-        loadingDiv.className = 'flex items-start gap-3';
+        loadingDiv.className = 'flex items-start gap-2';
         loadingDiv.innerHTML = `
-            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
-                Q
-            </div>
-            <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
-                <div class="flex space-x-2">
-                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 0ms"></div>
-                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 150ms"></div>
-                    <div class="w-2 h-2 rounded-full bg-neutral-400 animate-bounce" style="animation-delay: 300ms"></div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-sm flex-shrink-0">🌸</div>
+            <div class="bg-white dark:bg-neutral-700 rounded-2xl rounded-tl-sm shadow-sm border border-pink-100 dark:border-neutral-600 p-3">
+                <div class="flex space-x-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-bounce" style="animation-delay: 300ms"></div>
                 </div>
             </div>
         `;
@@ -123,104 +202,90 @@
         }
     }
 
-    // 初始化聊天机器人
-    function initChatBot() {
-        const toggle = document.getElementById('chatbot-toggle');
-        const chatWindow = document.getElementById('chatbot-window');
-        const close = document.getElementById('chatbot-close');
-        const form = document.getElementById('chatbot-form');
-        const input = document.getElementById('chatbot-input');
-        const messages = document.getElementById('chatbot-messages');
+    // 显示气泡消息
+    function showBubble(text) {
+        const bubble = document.getElementById('waifu-bubble');
+        const bubbleText = document.getElementById('waifu-text');
+        bubbleText.textContent = text;
+        bubble.classList.remove('hidden');
+        
+        setTimeout(() => {
+            bubble.classList.add('hidden');
+        }, 5000);
+    }
 
-        // 确保所有元素都存在
-        if (!toggle || !chatWindow || !close || !form || !input || !messages) {
-            console.error('聊天机器人元素未找到');
+    // 初始化
+    function initWaifu() {
+        const character = document.getElementById('waifu-character');
+        const chat = document.getElementById('waifu-chat');
+        const close = document.getElementById('waifu-close');
+        const form = document.getElementById('waifu-form');
+        const input = document.getElementById('waifu-input');
+        const messages = document.getElementById('waifu-messages');
+        const bubble = document.getElementById('waifu-bubble');
+
+        if (!character || !chat || !close || !form || !input || !messages) {
+            console.error('Waifu elements not found');
             return;
         }
 
-        // 移除可能存在的旧事件监听器
-        const newToggle = toggle.cloneNode(true);
-        toggle.parentNode.replaceChild(newToggle, toggle);
-        
-        const newClose = close.cloneNode(true);
-        close.parentNode.replaceChild(newClose, close);
-        
-        const newForm = form.cloneNode(true);
-        form.parentNode.replaceChild(newForm, form);
-        
-        const newInput = document.getElementById('chatbot-input');
-        const newMessages = document.getElementById('chatbot-messages');
-
-        // 切换聊天窗口
-        newToggle.addEventListener('click', function(e) {
-            e.preventDefault();
+        // 点击角色
+        character.addEventListener('click', function(e) {
             e.stopPropagation();
-            console.log('聊天按钮被点击');
-            chatWindow.classList.toggle('hidden');
-            console.log('聊天窗口状态:', chatWindow.classList.contains('hidden') ? '隐藏' : '显示');
+            bubble.classList.add('hidden');
+            chat.classList.toggle('hidden');
+            if (!chat.classList.contains('hidden')) {
+                input.focus();
+            }
         });
 
-        newClose.addEventListener('click', function(e) {
-            e.preventDefault();
+        // 关闭聊天
+        close.addEventListener('click', function(e) {
             e.stopPropagation();
-            chatWindow.classList.add('hidden');
+            chat.classList.add('hidden');
         });
+
+        // 随机显示气泡
+        setInterval(() => {
+            if (chat.classList.contains('hidden') && bubble.classList.contains('hidden')) {
+                const randomMsg = randomMessages[Math.floor(Math.random() * randomMessages.length)];
+                showBubble(randomMsg);
+            }
+        }, 30000);
 
         // 发送消息
-        newForm.addEventListener('submit', async function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const message = newInput.value.trim();
+            const message = input.value.trim();
             if (!message) return;
 
-            // 添加用户消息
-            addMessage(newMessages, 'user', message);
-            newInput.value = '';
+            addMessage(messages, 'user', message);
+            input.value = '';
 
-            // 显示加载状态
-            const loadingId = addLoadingMessage(newMessages);
+            const loadingId = addLoadingMessage(messages);
 
             try {
-                // 搜索本地内容
-                let localContext = '';
-                try {
-                    const searchResponse = await fetch(`/api/content-index?q=${encodeURIComponent(message)}`);
-                    if (searchResponse.ok) {
-                        const searchResults = await searchResponse.json();
-                        if (searchResults.length > 0) {
-                            localContext = '以下是从本地博客中找到的相关内容：\n';
-                            searchResults.forEach((result, index) => {
-                                localContext += `${index + 1}. 标题：${result.title}\n`;
-                                localContext += `   链接：/posts/${result.slug}/\n`;
-                                localContext += `   摘要：${result.description || result.content.substring(0, 100)}...\n\n`;
-                            });
-                        }
-                    }
-                } catch (searchError) {
-                    console.log('本地搜索失败:', searchError);
-                }
-                
-                // 调用本地 API
-                const userContent = localContext ? `${localContext}\n用户问题：${message}` : message;
-                const messages = [
-                    { role: 'system', content: '你是一个友好的AI博客助手，帮助用户解答关于博客、写作、技术等方面的问题。你的回答应该：1. 简洁明了，易于理解 2. 提供有价值的建议 3. 保持友好的语气 4. 如果用户问的是技术问题，可以提供代码示例' },
-                    { role: 'user', content: userContent }
-                ];
-                
+                // 调用API
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ messages })
+                    body: JSON.stringify({
+                        messages: [
+                            { role: 'system', content: '你是一个可爱的二次元少女助手，名字叫小樱。说话要活泼可爱，经常使用"~"、"呀"、"呢"等语气词。回答要简洁友好。' },
+                            { role: 'user', content: message }
+                        ]
+                    })
                 });
 
                 if (!response.ok) {
                     removeLoadingMessage(loadingId);
-                    addMessage(newMessages, 'assistant', 'API错误: ' + response.statusText);
+                    addMessage(messages, 'assistant', '哎呀，出错了呢~ 请稍后再试吧');
                     return;
                 }
 
-                // 处理 SSE 流式响应
+                // 处理流式响应
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let assistantMessage = '';
@@ -237,90 +302,73 @@
                         for (const line of lines) {
                             if (line.startsWith('data: ')) {
                                 const data = line.slice(6).trim();
-                                if (data === '[DONE]') {
-                                    break;
-                                }
+                                if (data === '[DONE]') break;
+                                
                                 try {
                                     const parsed = JSON.parse(data);
                                     if (parsed.content) {
                                         assistantMessage += parsed.content;
                                         
-                                        // 创建或更新助手消息
                                         if (!assistantMessageDiv) {
+                                            removeLoadingMessage(loadingId);
                                             assistantMessageDiv = document.createElement('div');
-                                            assistantMessageDiv.className = 'flex items-start gap-3';
+                                            assistantMessageDiv.className = 'flex items-start gap-2';
                                             assistantMessageDiv.innerHTML = `
-                                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
-                                                    Q
-                                                </div>
-                                                <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-3 max-w-[80%]">
-                                                    <p class="text-sm text-black dark:text-white">${assistantMessage}</p>
+                                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 flex items-center justify-center text-sm flex-shrink-0">🌸</div>
+                                                <div class="bg-white dark:bg-neutral-700 rounded-2xl rounded-tl-sm shadow-sm border border-pink-100 dark:border-neutral-600 p-2.5 max-w-[75%]">
+                                                    <p class="text-xs text-neutral-700 dark:text-neutral-200">${assistantMessage}</p>
                                                 </div>
                                             `;
-                                            newMessages.appendChild(assistantMessageDiv);
+                                            messages.appendChild(assistantMessageDiv);
                                         } else {
-                                            // 更新现有消息
                                             const contentDiv = assistantMessageDiv.querySelector('p');
                                             if (contentDiv) {
                                                 contentDiv.textContent = assistantMessage;
                                             }
                                         }
-                                        newMessages.scrollTop = newMessages.scrollHeight;
+                                        messages.scrollTop = messages.scrollHeight;
                                     }
                                 } catch (e) {
-                                    console.error('解析SSE数据错误:', e);
-                                }
-                            } else if (line.startsWith('data: {') && line.includes('error')) {
-                                try {
-                                    const parsed = JSON.parse(line.slice(6));
-                                    if (parsed.error) {
-                                        removeLoadingMessage(loadingId);
-                                        addMessage(newMessages, 'assistant', '错误: ' + parsed.error);
-                                        return;
-                                    }
-                                } catch (e) {
-                                    console.error('解析错误数据错误:', e);
+                                    console.error('Parse error:', e);
                                 }
                             }
                         }
                     }
                 } catch (error) {
-                    console.error('读取流数据错误:', error);
+                    console.error('Stream error:', error);
                     removeLoadingMessage(loadingId);
-                    addMessage(newMessages, 'assistant', '网络错误: ' + error.message);
+                    addMessage(messages, 'assistant', '网络出错了呢~ 请稍后再试吧');
                 }
-
-                removeLoadingMessage(loadingId);
             } catch (error) {
-                console.error('请求错误:', error);
+                console.error('Request error:', error);
                 removeLoadingMessage(loadingId);
-                addMessage(newMessages, 'assistant', '网络错误: ' + error.message);
+                addMessage(messages, 'assistant', '网络出错了呢~ 请稍后再试吧');
             }
         });
 
         // 点击外部关闭
         document.addEventListener('click', function(e) {
-            const container = document.getElementById('chatbot-container');
+            const container = document.getElementById('waifu-container');
             if (container && !container.contains(e.target)) {
-                chatWindow.classList.add('hidden');
+                chat.classList.add('hidden');
             }
         });
     }
 
-    // 确保DOM完全加载后执行
+    // 初始化
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initChatBot);
+        document.addEventListener('DOMContentLoaded', initWaifu);
     } else {
-        initChatBot();
+        initWaifu();
     }
 
-    // 监听Swup页面切换事件，重新初始化聊天机器人
+    // Swup支持
     if (window.swup) {
-        window.swup.hooks.on('page:view', initChatBot);
+        window.swup.hooks.on('page:view', initWaifu);
     } else {
         document.addEventListener('swup:enable', function() {
             if (window.swup) {
-                window.swup.hooks.on('page:view', initChatBot);
+                window.swup.hooks.on('page:view', initWaifu);
             }
         });
     }
