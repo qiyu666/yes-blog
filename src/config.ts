@@ -60,7 +60,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "AList网盘",
 			icon: "/favicon/alist.png",
-			url: "http://192.168.110.55:4214",
+			url: "https://alist.qiyu666.dpdns.org/",
 		},
 		{
 			name: "Steam",
