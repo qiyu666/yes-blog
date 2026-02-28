@@ -22,9 +22,6 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <select id="chatbot-model" class="text-sm bg-white text-black border border-neutral-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary w-32 md:w-40">
-                    <option value="gpt-4o">GPT-4o</option>
-                </select>
                 <button id="chatbot-close" class="text-white hover:opacity-80 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -154,7 +151,6 @@
         
         const newInput = document.getElementById('chatbot-input');
         const newMessages = document.getElementById('chatbot-messages');
-        const newModelSelect = document.getElementById('chatbot-model');
 
         // 切换聊天窗口
         newToggle.addEventListener('click', function(e) {
@@ -203,10 +199,6 @@
                 } catch (searchError) {
                     console.log('本地搜索失败:', searchError);
                 }
-
-                // 获取选择的模型
-                const selectedModel = newModelSelect.value;
-                console.log('选择的模型:', selectedModel);
                 
                 // 调用本地 API
                 const userContent = localContext ? `${localContext}\n用户问题：${message}` : message;
