@@ -55,7 +55,7 @@
         </div>
     </div>
     
-    <!-- 二次元小人 -->
+    <!-- 二次元小人 - 水手服小樱 -->
     <div id="waifu-character" class="relative cursor-pointer group">
         <!-- 悬浮提示 -->
         <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
@@ -63,43 +63,77 @@
         </div>
         
         <!-- 角色容器 -->
-        <div class="w-24 h-24 relative animate-float">
-            <!-- 身体 -->
-            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-14 bg-gradient-to-b from-pink-300 to-pink-400 rounded-full"></div>
+        <div class="w-28 h-32 relative animate-float">
+            <!-- 腿部 -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-1">
+                <div class="w-3 h-10 bg-neutral-100 rounded-full"></div>
+                <div class="w-3 h-10 bg-neutral-100 rounded-full"></div>
+            </div>
+            
+            <!-- 鞋子 -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-1">
+                <div class="w-3.5 h-3 bg-neutral-800 rounded-full"></div>
+                <div class="w-3.5 h-3 bg-neutral-800 rounded-full"></div>
+            </div>
+            
+            <!-- 裙子 -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-16 h-10 bg-blue-500 rounded-t-full"></div>
+            <div class="absolute bottom-7 left-1/2 -translate-x-1/2 w-18 h-3 bg-blue-600 rounded-full"></div>
+            
+            <!-- 身体/上衣 -->
+            <div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-12 h-12 bg-white rounded-t-2xl"></div>
+            
+            <!-- 领结 -->
+            <div class="absolute bottom-22 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-6 border-l-transparent border-r-transparent border-t-yellow-400"></div>
+            
+            <!-- 衣领 -->
+            <div class="absolute bottom-24 left-1/2 -translate-x-1/2 w-14 h-6">
+                <div class="absolute top-0 left-0 w-7 h-6 bg-blue-500 rounded-tl-full transform -rotate-12"></div>
+                <div class="absolute top-0 right-0 w-7 h-6 bg-blue-500 rounded-tr-full transform rotate-12"></div>
+            </div>
+            
+            <!-- 手臂 -->
+            <div class="absolute bottom-18 -left-1 w-3 h-10 bg-white rounded-full transform -rotate-15 animate-wave"></div>
+            <div class="absolute bottom-18 -right-1 w-3 h-10 bg-white rounded-full transform rotate-15 animate-wave" style="animation-delay: 0.5s"></div>
             
             <!-- 头部 -->
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-14 h-14 bg-gradient-to-b from-pink-200 to-pink-300 rounded-full shadow-lg">
+            <div class="absolute bottom-26 left-1/2 -translate-x-1/2 w-16 h-16 bg-neutral-100 rounded-full shadow-md">
                 <!-- 眼睛 -->
-                <div class="absolute top-4 left-3 w-3 h-4 bg-neutral-800 rounded-full">
-                    <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full"></div>
+                <div class="absolute top-5 left-3.5 w-3.5 h-4 bg-neutral-700 rounded-full">
+                    <div class="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full"></div>
                 </div>
-                <div class="absolute top-4 right-3 w-3 h-4 bg-neutral-800 rounded-full">
-                    <div class="absolute top-1 right-1 w-1 h-1 bg-white rounded-full"></div>
+                <div class="absolute top-5 right-3.5 w-3.5 h-4 bg-neutral-700 rounded-full">
+                    <div class="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full"></div>
                 </div>
                 
                 <!-- 腮红 -->
-                <div class="absolute top-7 left-1.5 w-2.5 h-1.5 bg-pink-400/50 rounded-full"></div>
-                <div class="absolute top-7 right-1.5 w-2.5 h-1.5 bg-pink-400/50 rounded-full"></div>
+                <div class="absolute top-9 left-2 w-3 h-2 bg-pink-300/60 rounded-full"></div>
+                <div class="absolute top-9 right-2 w-3 h-2 bg-pink-300/60 rounded-full"></div>
                 
                 <!-- 嘴巴 -->
-                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 w-3 h-2 border-b-2 border-neutral-700 rounded-full"></div>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-2.5 h-1.5 border-b-2 border-neutral-600 rounded-full"></div>
             </div>
             
             <!-- 头发 -->
-            <div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-18 h-16">
+            <div class="absolute bottom-36 left-1/2 -translate-x-1/2 w-20 h-20">
                 <!-- 刘海 -->
-                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-pink-400 rounded-full"></div>
-                <!-- 左发 -->
-                <div class="absolute top-4 -left-2 w-6 h-10 bg-pink-400 rounded-full transform -rotate-12"></div>
-                <!-- 右发 -->
-                <div class="absolute top-4 -right-2 w-6 h-10 bg-pink-400 rounded-full transform rotate-12"></div>
-                <!-- 呆毛 -->
-                <div class="absolute -top-2 left-1/2 w-1 h-4 bg-pink-400 rounded-full transform -rotate-15 origin-bottom"></div>
+                <div class="absolute top-6 left-1/2 -translate-x-1/2 w-14 h-8 bg-amber-700 rounded-full"></div>
+                <div class="absolute top-8 left-2 w-4 h-6 bg-amber-700 rounded-full transform -rotate-15"></div>
+                <div class="absolute top-8 right-2 w-4 h-6 bg-amber-700 rounded-full transform rotate-15"></div>
+                <!-- 侧发 -->
+                <div class="absolute top-10 -left-3 w-6 h-12 bg-amber-700 rounded-full transform -rotate-6"></div>
+                <div class="absolute top-10 -right-3 w-6 h-12 bg-amber-700 rounded-full transform rotate-6"></div>
             </div>
             
-            <!-- 手 -->
-            <div class="absolute bottom-4 -left-1 w-4 h-4 bg-pink-200 rounded-full animate-wave"></div>
-            <div class="absolute bottom-4 -right-1 w-4 h-4 bg-pink-200 rounded-full animate-wave" style="animation-delay: 0.5s"></div>
+            <!-- 帽子 -->
+            <div class="absolute bottom-38 left-1/2 -translate-x-1/2 w-18 h-8">
+                <!-- 帽顶 -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-14 h-6 bg-white rounded-t-full shadow-sm"></div>
+                <!-- 帽檐 -->
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-18 h-3 bg-white rounded-full shadow"></div>
+                <!-- 蓝色条纹 -->
+                <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-14 h-1.5 bg-blue-400 rounded-full"></div>
+            </div>
         </div>
     </div>
 </div>
