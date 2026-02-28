@@ -1,7 +1,6 @@
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
-import cloudflare from "@astrojs/cloudflare";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
@@ -30,7 +29,6 @@ export default defineConfig({
 	site: "https://blog.qiyu666.dpdns.org/",
 	base: "/",
 	trailingSlash: "always",
-	output: "server",
 	integrations: [
 		tailwind({
 			nesting: true,
@@ -105,9 +103,6 @@ export default defineConfig({
 		svelte(),
 		sitemap(),
 	],
-	adapter: cloudflare({
-		mode: "directory",
-	}),
 	markdown: {
 		remarkPlugins: [
 			remarkMath,
