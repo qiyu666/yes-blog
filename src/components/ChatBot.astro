@@ -131,10 +131,9 @@
         const form = document.getElementById('chatbot-form');
         const input = document.getElementById('chatbot-input');
         const messages = document.getElementById('chatbot-messages');
-        const modelSelect = document.getElementById('chatbot-model');
 
         // 确保所有元素都存在
-        if (!toggle || !chatWindow || !close || !form || !input || !messages || !modelSelect) {
+        if (!toggle || !chatWindow || !close || !form || !input || !messages) {
             console.error('聊天机器人元素未找到');
             return;
         }
