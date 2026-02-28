@@ -15,15 +15,8 @@ export async function generateContentIndex(): Promise<PostIndex[]> {
   
   return Promise.all(
     posts.map(async (post) => {
-      // 读取文章内容
-      const { Content } = await post.render();
-      const content = Content();
-      
-      // 提取纯文本内容
-      const plainContent = content
-        .replace(/<[^>]*>/g, '')  // 移除HTML标签
-        .replace(/\s+/g, ' ')     // 合并空白字符
-        .trim();
+      // 使用文章的描述作为内容，避免直接调用Astro组件
+      const plainContent = post.data.description || '';
       
       return {
         slug: post.slug,
