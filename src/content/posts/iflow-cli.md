@@ -1,6 +1,6 @@
 ---
 title: "iFlow CLI：终端里的AI智能编程助手"
-published: 2025-02-25
+published: 2026-02-25
 description: "一行命令，让AI助力你的编程与日常工作"
 tags: ["AI", "CLI", "工具"]
 category: "技术"
