@@ -8,7 +8,7 @@ draft: false
 ---
 # 如何通过 fuwari 部署博客并发布到 GitHub、Cloudflare
 
-**作者**：AI 助手
+**作者**：qiyu
 **日期**：2026-03-01
 **文档版本**：v1.0
 
