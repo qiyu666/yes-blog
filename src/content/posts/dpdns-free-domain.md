@@ -1,6 +1,6 @@
 ---
 title: "dpdns.org 免费域名注册教程"
-published: 2025-02-25
+published: 2026-02-25
 description: "免费获取 .dpdns.org 域名的完整教程"
 tags: ["域名", "教程", "免费"]
 category: "教程"
