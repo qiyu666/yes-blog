@@ -1,6 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
-
+// @eslint-disable-next-line -- slug is passed by parent component and used by Giscus via pathname
 const { slug } = Astro.props;
 ---
 <div class="mt-8 mb-4">
@@ -12,7 +11,7 @@ const { slug } = Astro.props;
     
     <!-- Giscus 评论系统 -->
     <div class="card-base p-6 rounded-xl">
-        <script src="https://giscus.app/client.js"
+        <script is:inline src="https://giscus.app/client.js"
             data-repo="qiyu666/fuwari"
             data-repo-id="R_kgDON3VjHg"
             data-category="General"

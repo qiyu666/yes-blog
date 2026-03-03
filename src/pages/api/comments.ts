@@ -1,5 +1,19 @@
 import type { APIRoute } from "astro";
 
+type D1Database = any;
+
+interface CloudflareEnv {
+	DB: D1Database;
+}
+
+declare global {
+	interface Locals {
+		runtime: {
+			env: CloudflareEnv;
+		};
+	}
+}
+
 export const POST: APIRoute = async ({ request, locals }) => {
 	try {
 		const body = await request.json();
