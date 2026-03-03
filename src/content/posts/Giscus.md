@@ -1,5 +1,5 @@
 ---
-title: "Gisuus评论区教程"
+title: "Gisuus评论区教程(通用)"
 published: 2026-03-01
 description: "跟着教程做，你也能给你的网站添加评论区"
 tags: ["评论区", "GitHub", "网站"]
