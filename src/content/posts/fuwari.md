@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 title: "fuwari部署教程"
 published: 2026-03-01
 description: "简简单单的部署，跟着教程做，你也能有一个属于你自己的搏客"
