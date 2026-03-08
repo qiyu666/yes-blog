@@ -27,6 +27,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // https://astro.build/config
 export default defineConfig({
 	site: "https://blog.qiyu666.dpdns.org/",
+output: 'static', // <-- 添加这一行
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
