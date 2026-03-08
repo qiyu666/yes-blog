@@ -1,0 +1,30 @@
+---
+// @eslint-disable-next-line -- slug is passed by parent component and used by Giscus via pathname
+const { slug } = Astro.props;
+---
+<div class="mt-8 mb-4">
+    <div class="flex items-center gap-2 mb-6">
+        <div class="w-1 h-6 bg-[var(--primary)] rounded-full"></div>
+        <h3 class="text-xl font-bold">评论</h3>
+        <span class="text-sm text-neutral-500">(使用 Giscus 评论系统)</span>
+    </div>
+    
+    <!-- Giscus 评论系统 -->
+    <div class="card-base p-6 rounded-xl">
+        <script is:inline src="https://giscus.app/client.js"
+            data-repo="qiyu666/fuwari"
+            data-repo-id="R_kgDON3VjHg"
+            data-category="General"
+            data-category-id="DIC_kwDON3VjHs4CnLZ1"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </div>
+</div>
