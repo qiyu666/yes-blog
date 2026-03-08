@@ -19,6 +19,7 @@ import { defaultFavicons } from "../constants/icon";
 import type { Favicon } from "../types/config";
 import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
+import AiChatBot from '../components/AiChatBot';
 
 interface Props {
 	title?: string;
@@ -171,6 +172,8 @@ const bannerOffset =
 
     <!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
     <div id="page-height-extend" class="hidden h-[300vh]"></div>
+     <!-- 添加AI聊天机器人 -->
+    <AiChatBot client:load />
 
 	</body>
 </html>
