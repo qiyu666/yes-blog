@@ -1,10 +1,11 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+  import { $state } from 'svelte';
 
-  let messages = [];
-  let inputMessage = '';
-  let isLoading = false;
-  let chatWindowOpen = false;
+  let messages = $state([]);
+  let inputMessage = $state('');
+  let isLoading = $state(false);
+  let chatWindowOpen = $state(false);
 
   // 星火API配置
   const API_KEY = 'bafe465421af01b17552f7f826f08eb4';
