@@ -1,4 +1,3 @@
-// src/components/AiChatBot.tsx
 import React, { useState, useRef, useEffect } from 'react';
 
 interface Message {
@@ -16,7 +15,6 @@ export default function AiChatBot() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState({ x: 20, y: 20 });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // 自动滚动到最新消息
@@ -76,33 +74,11 @@ export default function AiChatBot() {
     }
   };
   
-  // 拖拽功能
-  const handleMouseDown = (e: React.MouseEvent) => {
-    const startX = e.clientX - position.x;
-    const startY = e.clientY - position.y;
-    
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      setPosition({
-        x: moveEvent.clientX - startX,
-        y: moveEvent.clientY - startY
-      });
-    };
-    
-    const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-    
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-  
   return (
     <>
-      {/* 悬浮按钮 */}
+      {/* 悬浮按钮 - 圆形 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        onMouseDown={handleMouseDown}
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -113,7 +89,7 @@ export default function AiChatBot() {
           backgroundColor: '#3b82f6',
           color: 'white',
           border: 'none',
-          cursor: 'move',
+          cursor: 'pointer',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           zIndex: 1000,
           display: 'flex',
