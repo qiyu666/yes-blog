@@ -1,4 +1,4 @@
-mkdir -p src/components && cat > src/components/AiChatBot.tsx << 'EOF'
+cat > src/components/AiChatBot.tsx << 'ENDOFFILE'
 import React, { useState, useRef, useEffect } from 'react';
 
 interface Message {
@@ -243,4 +243,4 @@ export default function AiChatBot() {
     </>
   );
 }
-EOF
+ENDOFFILE
