@@ -38,7 +38,7 @@ export default function AiChatBot() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('https://blog-ai-chatbot.你的用户名.workers.dev/api/chat', {
+      const response = await fetch('https://autumn-breeze-8f1c.3270581950.workers.dev/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
