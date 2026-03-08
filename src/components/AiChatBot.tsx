@@ -1,3 +1,4 @@
+mkdir -p src/components && cat > src/components/AiChatBot.tsx << 'EOF'
 import React, { useState, useRef, useEffect } from 'react';
 
 interface Message {
@@ -17,12 +18,10 @@ export default function AiChatBot() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // 自动滚动到最新消息
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
-  // 发送消息
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
     
@@ -76,7 +75,6 @@ export default function AiChatBot() {
   
   return (
     <>
-      {/* 悬浮按钮 - 圆形 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
@@ -104,7 +102,6 @@ export default function AiChatBot() {
         {isOpen ? '✕' : '💬'}
       </button>
       
-      {/* 聊天窗口 */}
       {isOpen && (
         <div
           style={{
@@ -123,7 +120,6 @@ export default function AiChatBot() {
             fontFamily: 'system-ui, -apple-system, sans-serif'
           }}
         >
-          {/* 头部 */}
           <div
             style={{
               padding: '16px',
@@ -152,7 +148,6 @@ export default function AiChatBot() {
             </button>
           </div>
           
-          {/* 消息区域 */}
           <div
             style={{
               flex: 1,
@@ -202,7 +197,6 @@ export default function AiChatBot() {
             <div ref={messagesEndRef} />
           </div>
           
-          {/* 输入区域 */}
           <div
             style={{
               padding: '12px',
@@ -249,3 +243,4 @@ export default function AiChatBot() {
     </>
   );
 }
+EOF
