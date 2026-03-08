@@ -7,7 +7,7 @@
   let chatWindowOpen = false;
 
   // 星火API配置
-  const API_KEY = '123456';
+  const API_KEY = 'bafe465421af01b17552f7f826f08eb4';
   const API_URL = 'https://spark-api.xf-yun.com/v1/chat/completions';
 
   // 发送消息到星火API
