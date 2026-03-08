@@ -27,7 +27,7 @@
           'Authorization': `Bearer ${API_KEY}`
         },
         body: JSON.stringify({
-          model: 'spark-1.5',
+          model: 'spark-ultra32k',
           messages: messages,
           temperature: 0.7
         })
