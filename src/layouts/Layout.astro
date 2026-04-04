@@ -176,66 +176,45 @@ const bannerOffset =
 
 	<script is:inline define:vars={{chatbaseId: "w0qOqJ-8SsrJS-odcCir1"}}>
 		(function(){
-			// Remove existing chatbase elements
-			var oldScript = document.getElementById(chatbaseId);
-			if (oldScript) oldScript.remove();
-			
-			// Clear state
-			if (window.chatbase) {
-				try { window.chatbase("destroy"); } catch(e) {}
-				delete window.chatbase;
+			// If chatbase already initialized, just show it
+			if (window.chatbase && typeof window.chatbase === "function") {
+				try {
+					var state = window.chatbase("getState");
+					if (state === "initialized" || state === "ready") {
+						window.chatbase("show");
+						return;
+					}
+				} catch(e) {}
 			}
 			
-			// Setup stub
-			var chatbaseFunc = function() {
+			// Setup stub function
+			window.chatbase = function() {
 				var args = Array.prototype.slice.call(arguments);
-				if (!chatbaseFunc.q) chatbaseFunc.q = [];
-				chatbaseFunc.q.push(args);
+				if (!window.chatbase.q) window.chatbase.q = [];
+				window.chatbase.q.push(args);
 			};
-			chatbaseFunc.q = [];
+			window.chatbase.q = [];
 			
-			window.chatbase = new Proxy(chatbaseFunc, {
-				get: function(target, prop) {
-					if (prop === "q") return target.q;
-					return function() {
-						var args = Array.prototype.slice.call(arguments);
-						target.q.push([prop, args]);
-					};
-				}
-			});
+			// Create and load script
+			var script = document.createElement("script");
+			script.src = "https://www.chatbase.co/embed.min.js";
+			script.id = chatbaseId;
+			script.chatbotId = chatbaseId;
+			script.domain = "www.chatbase.co";
+			script.async = true;
 			
-			// Load via fetch + blob with timeout
-			var loadTimeout = setTimeout(function() {
-				console.error("Chatbase load timeout");
-			}, 10000);
+			script.onload = function() {
+				// Execute queued commands
+				setTimeout(function() {
+					if (window.chatbase.q) {
+						window.chatbase.q.forEach(function(args) {
+							try { window.chatbase.apply(null, args); } catch(e) {}
+						});
+					}
+				}, 200);
+			};
 			
-			var cacheBuster = "_=" + Date.now();
-			fetch("https://www.chatbase.co/embed.min.js?" + cacheBuster, { cache: 'no-store' })
-				.then(function(response) {
-					if (!response.ok) throw new Error("Network error");
-					return response.blob();
-				})
-				.then(function(blob) {
-					clearTimeout(loadTimeout);
-					var url = URL.createObjectURL(blob);
-					var script = document.createElement("script");
-					script.src = url;
-					script.id = chatbaseId;
-					script.chatbotId = chatbaseId;
-					script.domain = "www.chatbase.co";
-					
-					script.onload = function() {
-						setTimeout(function() {
-							try { window.chatbase("show"); } catch(e) {}
-						}, 300);
-					};
-					
-					document.body.appendChild(script);
-				})
-				.catch(function(err) {
-					clearTimeout(loadTimeout);
-					console.error("Chatbase load failed:", err);
-				});
+			document.body.appendChild(script);
 		})();
 	</script>
 </html>
