@@ -176,48 +176,47 @@ const bannerOffset =
 
 	<script is:inline define:vars={{chatbaseId: "w0qOqJ-8SsrJS-odcCir1"}}>
 		(function(){
-			if(!window.chatbase||window.chatbase("getState")!=="initialized"){
-				window.chatbase=(...arguments)=>{
-					if(!window.chatbase.q){window.chatbase.q=[]}
-					window.chatbase.q.push(arguments)
-				};
-				window.chatbase=new Proxy(window.chatbase,{
-					get(target,prop){
-						if(prop==="q"){return target.q}
-						return(...args)=>target(prop,...args)
-					}
-				})
+			// Remove existing chatbase elements to force reload
+			var existingScript = document.getElementById(chatbaseId);
+			if(existingScript){
+				existingScript.remove();
+			}
+			// Reset chatbase state
+			if(window.chatbase){
+				try{window.chatbase("destroy");}catch(e){}
+				delete window.chatbase;
 			}
 			
-			const script=document.createElement("script");
+			window.chatbase=function(){
+				var args=Array.from(arguments);
+				if(!window.chatbase.q){window.chatbase.q=[]}
+				window.chatbase.q.push(args)
+			};
+			window.chatbase=new Proxy(window.chatbase,{
+				get:function(target,prop){
+					if(prop==="q"){return target.q}
+					return function(){
+						var args=Array.from(arguments);
+						return target(prop,args)
+					}
+				}
+			});
+			
+			var script=document.createElement("script");
 			script.src="https://www.chatbase.co/embed.min.js";
 			script.id=chatbaseId;
 			script.chatbotId=chatbaseId;
 			script.domain="www.chatbase.co";
 			
-			// Wait for chatbase to be ready before appending script
-			const tryAppend=()=>{
-				if(window.chatbase&&typeof window.chatbase==="function"){
-					document.body.appendChild(script);
-				}else{
-					setTimeout(tryAppend,100);
-				}
-			};
-			
-			if(document.readyState==="complete"){
-				tryAppend();
-			}else{
-				window.addEventListener("load",tryAppend);
-			}
-			
-			// Show chatbase widget after script loads
 			script.onload=function(){
-				setTimeout(()=>{
+				setTimeout(function(){
 					if(window.chatbase){
 						window.chatbase("show");
 					}
-				},500);
+				},300);
 			};
+			
+			document.body.appendChild(script);
 		})();
 	</script>
 </html>
