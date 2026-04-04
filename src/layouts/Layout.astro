@@ -176,44 +176,47 @@ const bannerOffset =
 
 	<script is:inline define:vars={{chatbaseId: "w0qOqJ-8SsrJS-odcCir1"}}>
 		(function(){
-			// Remove existing chatbase elements to force reload
-			var existingScript = document.getElementById(chatbaseId);
-			if(existingScript){
-				existingScript.remove();
-			}
-			// Reset chatbase state
-			if(window.chatbase){
-				try{window.chatbase("destroy");}catch(e){}
-				delete window.chatbase;
-			}
-			
-			window.chatbase=function(){
-				var args=Array.from(arguments);
-				if(!window.chatbase.q){window.chatbase.q=[]}
-				window.chatbase.q.push(args)
-			};
-			window.chatbase=new Proxy(window.chatbase,{
-				get:function(target,prop){
-					if(prop==="q"){return target.q}
-					return function(){
-						var args=Array.from(arguments);
-						return target(prop,args)
-					}
+			// Check if chatbase already loaded
+			if (window.chatbase && window.chatbase.getState) {
+				var state = window.chatbase.getState();
+				if (state === "initialized") {
+					// Already initialized, just show it
+					window.chatbase("show");
+					return;
 				}
-			});
+			}
 			
-			var script=document.createElement("script");
-			script.src="https://www.chatbase.co/embed.min.js";
-			script.id=chatbaseId;
-			script.chatbotId=chatbaseId;
-			script.domain="www.chatbase.co";
+			// Setup chatbase stub before script loads
+			window.chatbase = function() {
+				if (window.chatbase.q) {
+					window.chatbase.q.push(arguments);
+				}
+			};
+			window.chatbase.q = [];
 			
-			script.onload=function(){
-				setTimeout(function(){
-					if(window.chatbase){
-						window.chatbase("show");
+			// Load script with timestamp to avoid cache
+			var script = document.createElement("script");
+			script.src = "https://www.chatbase.co/embed.min.js?v=" + Date.now();
+			script.id = chatbaseId;
+			script.chatbotId = chatbaseId;
+			script.domain = "www.chatbase.co";
+			script.async = true;
+			
+			script.onload = function() {
+				setTimeout(function() {
+					// Process any queued commands
+					if (window.chatbase.q) {
+						window.chatbase.q.forEach(function(args) {
+							try { window.chatbase.apply(null, args); } catch(e) {}
+						});
 					}
-				},300);
+					// Show the widget
+					try { window.chatbase("show"); } catch(e) {}
+				}, 300);
+			};
+			
+			script.onerror = function() {
+				console.error("Chatbase script failed to load");
 			};
 			
 			document.body.appendChild(script);
