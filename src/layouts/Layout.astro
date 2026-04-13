@@ -4,6 +4,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
+import ChatWidget from "@components/ChatWidget.astro";
 import { profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
@@ -172,51 +173,10 @@ const bannerOffset =
     <!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
     <div id="page-height-extend" class="hidden h-[300vh]"></div>
 
+    <ChatWidget />
+
 	</body>
 
-	<script is:inline define:vars={{chatbaseId: "w0qOqJ-8SsrJS-odcCir1"}}>
-		(function(){
-			// If chatbase already initialized, just show it
-			if (window.chatbase && typeof window.chatbase === "function") {
-				try {
-					var state = window.chatbase("getState");
-					if (state === "initialized" || state === "ready") {
-						window.chatbase("show");
-						return;
-					}
-				} catch(e) {}
-			}
-			
-			// Setup stub function
-			window.chatbase = function() {
-				var args = Array.prototype.slice.call(arguments);
-				if (!window.chatbase.q) window.chatbase.q = [];
-				window.chatbase.q.push(args);
-			};
-			window.chatbase.q = [];
-			
-			// Create and load script
-			var script = document.createElement("script");
-			script.src = "https://www.chatbase.co/embed.min.js";
-			script.id = chatbaseId;
-			script.chatbotId = chatbaseId;
-			script.domain = "www.chatbase.co";
-			script.async = true;
-			
-			script.onload = function() {
-				// Execute queued commands
-				setTimeout(function() {
-					if (window.chatbase.q) {
-						window.chatbase.q.forEach(function(args) {
-							try { window.chatbase.apply(null, args); } catch(e) {}
-						});
-					}
-				}, 200);
-			};
-			
-			document.body.appendChild(script);
-		})();
-	</script>
 </html>
 
 <style is:global define:vars={{
