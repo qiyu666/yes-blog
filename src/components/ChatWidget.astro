@@ -1,5 +1,5 @@
 ---
-const assistantName = "晴辰助手";
+const assistantName = "QiYu助手";
 const apiKey = import.meta.env.PUBLIC_API_KEY || "";
 ---
 
@@ -138,13 +138,7 @@ const apiKey = import.meta.env.PUBLIC_API_KEY || "";
           <svg class="chat-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         </div>
         <h3 class="welcome-msg">你好！我是{assistantName}，有什么可以帮你的吗？</h3>
-        <p class="welcome-sub">我可以帮你查看用量、解答 API 使用问题、排查常见错误</p>
-      </div>
-      <div class="quick-actions">
-        <button class="action-btn" data-action="查看用量">查看用量</button>
-        <button class="action-btn" data-action="429错误">429错误</button>
-        <button class="action-btn" data-action="客户端配置">客户端配置</button>
-        <button class="action-btn" data-action="可用模型">可用模型</button>
+        <p class="welcome-sub">我可以帮你解决一些问题</p>
       </div>
     </div>
     <div class="chat-footer">
@@ -161,7 +155,7 @@ const apiKey = import.meta.env.PUBLIC_API_KEY || "";
 </div>
 
 <script define:vars={{ apiKey }}>
-  var API_URL = "https://got.qt.cool/";
+  var API_URL = "https://got.qt.cool/v1";
   var MODEL_ID = "QC-B02";
   var API_KEY = apiKey;
   
