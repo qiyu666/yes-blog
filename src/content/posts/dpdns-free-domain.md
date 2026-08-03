@@ -19,7 +19,7 @@ draft: false
 
 ### 第一步：注册 dpdns 平台账户
 
-访问 dpdns 平台的注册页面：https://dash.domain./auth/register
+访问 dpdns 平台的注册页面：https://dash.domain.digitalplat.org/auth/register
 
 填写注册信息：
 
@@ -39,7 +39,7 @@ draft: false
 
 ### 第三步：登录并完成 KYC（身份验证）
 
-使用刚才注册的账户登录 dpdns 平台：https://dash.domain./auth/login
+使用刚才注册的账户登录 dpdns 平台：https://dash.domain.digitalplat.org/auth/login
 
 首次登录后，系统通常会提示你进行身份验证（KYC）。请选择 GitHub OAuth 方式。
 
@@ -49,7 +49,7 @@ draft: false
 
 KYC 验证通过后，你就可以开始注册域名了：
 
-访问域名注册页面：https://dash.domain./panel/main?page=%2Fpanel%2Fregister
+访问域名注册页面：https://dash.domain.digitalplat.org/panel/main?page=%2Fpanel%2Fregister
 
 在输入框中输入你心仪的域名前缀（例如 mytestdomain），后缀选择 .dpdns.org。
 
@@ -65,7 +65,7 @@ KYC 验证通过后，你就可以开始注册域名了：
 
 1. 访问 GitHub 上的指定项目：https://github.com/DigitalPlatDev/FreeDomain
 2. 点击右上角的 Star 按钮收藏该项目。
-3. 然后访问 https://dash.domain./auth/login/github 进行授权。
+3. 然后访问 https://dash.domain.digitalplat.org/auth/login/github 进行授权。
 
 成功后，你的账户通常会获得额外的注册名额（例如+1）。之后便可重复第四步注册更多域名。
 
@@ -83,7 +83,7 @@ KYC 验证通过后，你就可以开始注册域名了：
 
 #### 在 dpdns 平台修改 NS 记录
 
-1. 登录 dpdns 平台，进入域名管理页面：https://dash.domain./panel/main?page=%2Fpanel%2Fdomains
+1. 登录 dpdns 平台，进入域名管理页面：https://dash.domain.digitalplat.org/panel/main?page=%2Fpanel%2Fdomains
 2. 找到你的域名并点击管理。
 3. 将 NS 记录修改为从 Cloudflare 获取到的两个名称服务器地址。
 4. 保存更改。DNS 解析完全生效可能需要几十分钟到几小时，请耐心等待。
