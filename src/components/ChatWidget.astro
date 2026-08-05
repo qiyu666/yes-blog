@@ -155,7 +155,7 @@ const apiKey = import.meta.env.PUBLIC_API_KEY || "";
 </div>
 
 <script define:vars={{ apiKey }}>
-  var API_URL = "https://gpt.qt.cool/v1/chat/completions";
+  var API_URL = "/api/chat";
   var MODEL_ID = "kimi-k2.6";
   var API_KEY = apiKey;
   
@@ -196,8 +196,7 @@ const apiKey = import.meta.env.PUBLIC_API_KEY || "";
       var response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + API_KEY
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           model: MODEL_ID,
@@ -205,12 +204,10 @@ const apiKey = import.meta.env.PUBLIC_API_KEY || "";
           max_tokens: 1000
         })
       });
-      if (!response.ok) {
-        if (response.status === 429) return '请求频率超限，请稍后再试。';
-        if (response.status === 401) return 'API 密钥无效，请检查配置。';
-        return '请求失败，状态码: ' + response.status;
-      }
       var data = await response.json();
+      if (!response.ok) {
+        return data.error || '请求失败，状态码: ' + response.status;
+      }
       return data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : '无法解析响应';
     } catch (e) {
       return '请求失败: ' + e.message;
