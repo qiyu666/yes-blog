@@ -10,7 +10,7 @@ const { slug } = Astro.props;
     </div>
     
     <!-- Giscus 评论系统 -->
-    <div class="card-base p-6 rounded-xl" style="min-height: 400px;">
+    <div class="card-base p-6 rounded-xl">
         <script is:inline src="https://giscus.app/client.js"
             data-repo="qiyu666/yes-blog"
             data-repo-id="R_kgDORznzAg"
@@ -21,17 +21,11 @@ const { slug } = Astro.props;
             data-reactions-enabled="1"
             data-emit-metadata="0"
             data-input-position="bottom"
+            data-height="400"
             data-theme="preferred_color_scheme"
             data-lang="zh-CN"
             crossorigin="anonymous"
             async>
         </script>
-        <style>
-            .giscus-frame {
-                min-height: 400px !important;
-                width: 100% !important;
-                border: none !important;
-            }
-        </style>
     </div>
 </div>
