@@ -5,6 +5,8 @@ tags: ["Termux", "Trae"]
 ---
 手机运行原生 Trae
 
+需要的所有文件我都放在https://pan.aiit.cc.cd/%E8%A7%86%E9%A2%912 需要的直接下载
+
 本文档将介绍如何在手机上运行原生 Trae 环境。
 
 需要用到的 APP
