@@ -7,7 +7,7 @@ tags:
   － Termux
   － Trae
   -海鸥加速器
-published: true
+published: 2026-9-16
 ---
 手机运行原生 Trae
 
