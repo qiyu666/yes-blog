@@ -1,13 +1,7 @@
----
-title: "手机运行原生 Trae"
-date: "2026-09-16"
-categories:
-  －技术分享
-tags:
-  － Termux
-  － Trae
-  -海鸥加速器
-published: 2026-9-16
+---title: "手机运行原生 Trae"
+published: 2026-09-18
+categories: ["技术分享"]
+tags: ["Termux", "Trae"]
 ---
 手机运行原生 Trae
 
