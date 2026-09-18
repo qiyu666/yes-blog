@@ -1,6 +1,6 @@
 ---title: "手机运行原生 Trae"
 published: 2026-09-18
-categories: ["技术分享"]
+categories: ["技术"]
 tags: ["Termux", "Trae"]
 ---
 手机运行原生 Trae
